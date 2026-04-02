@@ -1,4 +1,6 @@
-from PIL import Image
+# Image conversion module enhanced with logging
+
+from PIL import Image  #PILLOW library is being used
 import os
 
 
@@ -20,9 +22,9 @@ def convert(input_path, target_format):
         raise ValueError(f"Unsupported image format: {target_format}")
 
     base = os.path.splitext(input_path)[0]
-    output_path = f"{base}_converted.{target_format}"
+    output_path = f"{base}_converted.{target_format}" # example- image.png → image_converted.jpg
 
-    img = Image.open(input_path)
+    img = Image.open(input_path)  #Loads image into memory
 
     # JPEG doesn't support transparency — convert to RGB if needed
     if target_format in ('jpg', 'jpeg') and img.mode in ('RGBA', 'P'):
@@ -33,6 +35,6 @@ def convert(input_path, target_format):
     return output_path
 
 
-def can_handle(input_path, target_format):
+def can_handle(input_path, target_format):   #Check if this converter can process given file
     ext = os.path.splitext(input_path)[1].lower().strip('.')
-    return ext in SUPPORTED and target_format.lower() in SUPPORTED
+    return ext in SUPPORTED and target_format.lower() in SUPPORTED #only valid image formats allowed
